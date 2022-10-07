@@ -9,7 +9,7 @@ env:
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   SONAR_HOST: https://sonarcloud.io
   SONAR_ORGANIZATION: sharpgrip
-  SONAR_PROJECT: SharpGrip_FileSystem
+  SONAR_PROJECT: SharpGrip_OpenIddict.Api
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
@@ -47,7 +47,7 @@ jobs:
           dotnet tool update dotnet-sonarscanner --tool-path ${{ env.SONAR_PATH }}
 
       - name: Build solution
-        run: dotnet build -c ${{ env.DOTNET_BUILD_CONFIGURATION }} /warnaserror
+        run: dotnet build -c ${{ env.DOTNET_BUILD_CONFIGURATION }} /nowarn:NU1701 /warnaserror
 
       - name: Test solution
         run: dotnet test --no-build -c ${{ env.DOTNET_BUILD_CONFIGURATION }} --verbosity normal
