@@ -4,6 +4,12 @@
 
 [![OpenIddict.Api [Build]](https://github.com/SharpGrip/OpenIddict.Api/actions/workflows/Build.yaml/badge.svg)](https://github.com/SharpGrip/OpenIddict.Api/actions/workflows/Build.yaml)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SharpGrip_OpenIddict.Api&metric=alert_status)](https://sonarcloud.io/summary/overall?id=SharpGrip_OpenIddict.Api) \
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=SharpGrip_OpenIddict.Api&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=SharpGrip_OpenIddict.Api) \
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=SharpGrip_OpenIddict.Api&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=SharpGrip_OpenIddict.Api) \
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=SharpGrip_OpenIddict.Api&metric=security_rating)](https://sonarcloud.io/summary/overall?id=SharpGrip_OpenIddict.Api) \
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=SharpGrip_OpenIddict.Api&metric=coverage)](https://sonarcloud.io/summary/overall?id=SharpGrip_OpenIddict.Api)
+
 ## Introduction
 
 SharpGrip OpenIddict API is an extension of the OpenIddict library exposing the OpenIddict entities through a RESTful API.
