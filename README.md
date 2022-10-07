@@ -12,7 +12,7 @@
 
 ## Introduction
 
-SharpGrip OpenIddict API is an extension of the OpenIddict library exposing the OpenIddict entities through a RESTful API.
+SharpGrip OpenIddict API is an extension of the [OpenIddict](https://github.com/openiddict/openiddict-core) library exposing the OpenIddict entities through a RESTful API.
 
 ## Installation
 
