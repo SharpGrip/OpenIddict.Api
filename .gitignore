@@ -1,0 +1,10 @@
+.idea/
+.nuget/
+NuGet/
+[Oo]bj/
+[Bb]in/
+Test/
+TestConsoleApp/
+TestWebApp/
+.DS_Store
+*.DotSettings.user
