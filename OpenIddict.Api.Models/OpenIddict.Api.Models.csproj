@@ -14,9 +14,9 @@
     <PropertyGroup>
         <AssemblyName>SharpGrip.OpenIddict.Api.Models</AssemblyName>
         <PackageId>SharpGrip.OpenIddict.Api.Models</PackageId>
-        <PackageVersion>1.0.0-alpha1</PackageVersion>
+        <PackageVersion>1.0.0-alpha2</PackageVersion>
         <Title>SharpGrip OpenIddict API Models</Title>
-        <Description>SharpGrip OpenIddict.Api is an extension of the OpenIddict library exposing the OpenIddict entities through a REST API.</Description>
+        <Description>SharpGrip OpenIddict.Api is an extension of the OpenIddict library exposing the OpenIddict entities through a RESTful API.</Description>
         <Company>SharpGrip</Company>
         <Authors>SharpGrip</Authors>
         <Copyright>SharpGrip</Copyright>

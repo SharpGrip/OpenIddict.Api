@@ -7,6 +7,7 @@ using OpenIddict.Core;
 using OpenIddict.EntityFrameworkCore.Models;
 using OpenIddict.Validation.AspNetCore;
 using SharpGrip.OpenIddict.Api.Mapping;
+using SharpGrip.OpenIddict.Api.Utilities;
 
 namespace SharpGrip.OpenIddict.Api.Controllers
 {
@@ -21,7 +22,8 @@ namespace SharpGrip.OpenIddict.Api.Controllers
     {
         private readonly OpenIddictAuthorizationManager<TAuthorization> openIddictAuthorizationManager;
 
-        public AuthorizationController(Mapper<TApplication, TAuthorization, TScope, TToken, TKey> mapper, OpenIddictAuthorizationManager<TAuthorization> openIddictAuthorizationManager) : base(mapper)
+        public AuthorizationController(Mapper<TApplication, TAuthorization, TScope, TToken, TKey> mapper, ModelValidator modelValidator, OpenIddictAuthorizationManager<TAuthorization> openIddictAuthorizationManager) 
+            : base(mapper, modelValidator)
         {
             this.openIddictAuthorizationManager = openIddictAuthorizationManager;
         }

@@ -14,7 +14,7 @@
     <PropertyGroup>
         <AssemblyName>SharpGrip.OpenIddict.Api.Validation</AssemblyName>
         <PackageId>SharpGrip.OpenIddict.Api.Validation</PackageId>
-        <PackageVersion>1.0.0-alpha1</PackageVersion>
+        <PackageVersion>1.0.0-alpha2</PackageVersion>
         <Title>SharpGrip OpenIddict API Validation</Title>
         <Description>SharpGrip OpenIddict.Api is an extension of the OpenIddict library exposing the OpenIddict entities through a RESTful API.</Description>
         <Company>SharpGrip</Company>

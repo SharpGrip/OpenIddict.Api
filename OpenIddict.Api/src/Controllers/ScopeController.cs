@@ -9,6 +9,7 @@ using OpenIddict.EntityFrameworkCore.Models;
 using OpenIddict.Validation.AspNetCore;
 using SharpGrip.OpenIddict.Api.Mapping;
 using SharpGrip.OpenIddict.Api.Models.Scope;
+using SharpGrip.OpenIddict.Api.Utilities;
 
 namespace SharpGrip.OpenIddict.Api.Controllers
 {
@@ -23,7 +24,8 @@ namespace SharpGrip.OpenIddict.Api.Controllers
     {
         private readonly OpenIddictScopeManager<TScope> openIddictScopeManager;
 
-        public ScopeController(Mapper<TApplication, TAuthorization, TScope, TToken, TKey> mapper, OpenIddictScopeManager<TScope> openIddictScopeManager) : base(mapper)
+        public ScopeController(Mapper<TApplication, TAuthorization, TScope, TToken, TKey> mapper, ModelValidator modelValidator, OpenIddictScopeManager<TScope> openIddictScopeManager)
+            : base(mapper, modelValidator)
         {
             this.openIddictScopeManager = openIddictScopeManager;
         }
@@ -67,6 +69,13 @@ namespace SharpGrip.OpenIddict.Api.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> Create(ScopeCreateModel scopeCreateModel)
         {
+            var validationResult = await ModelValidator.Validate(scopeCreateModel);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             try
             {
                 var openIddictScopeDescriptor = Mapper.Map(scopeCreateModel);
@@ -91,6 +100,13 @@ namespace SharpGrip.OpenIddict.Api.Controllers
             if (scope == null)
             {
                 return NotFound();
+            }
+
+            var validationResult = await ModelValidator.Validate(scopeUpdateModel);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
             }
 
             try

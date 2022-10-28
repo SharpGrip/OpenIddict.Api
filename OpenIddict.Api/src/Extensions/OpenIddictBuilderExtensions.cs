@@ -8,6 +8,7 @@ using SharpGrip.OpenIddict.Api.Controllers;
 using SharpGrip.OpenIddict.Api.Mapping;
 using SharpGrip.OpenIddict.Api.Options;
 using SharpGrip.OpenIddict.Api.Routing;
+using SharpGrip.OpenIddict.Api.Utilities;
 
 namespace SharpGrip.OpenIddict.Api.Extensions
 {
@@ -20,7 +21,7 @@ namespace SharpGrip.OpenIddict.Api.Extensions
         }
 
         public static OpenIddictEntityFrameworkCoreBuilder AddApi<TApplication, TAuthorization, TScope, TToken, TKey>(this OpenIddictEntityFrameworkCoreBuilder openIddictEntityFrameworkCoreBuilder,
-            Action<OpenIddictApiOptions>? openIddictApiAptions = null)
+            Action<OpenIddictApiOptions>? openIddictApiOptions = null)
             where TApplication : OpenIddictEntityFrameworkCoreApplication<TKey, TAuthorization, TToken>
             where TAuthorization : OpenIddictEntityFrameworkCoreAuthorization<TKey, TApplication, TToken>
             where TScope : OpenIddictEntityFrameworkCoreScope<TKey>
@@ -29,20 +30,21 @@ namespace SharpGrip.OpenIddict.Api.Extensions
         {
             var defaultOpenIddictApiOptions = new OpenIddictApiOptions();
 
-            if (openIddictApiAptions != null)
+            if (openIddictApiOptions != null)
             {
-                openIddictApiAptions.Invoke(defaultOpenIddictApiOptions);
-                openIddictEntityFrameworkCoreBuilder.Services.Configure(openIddictApiAptions);
+                openIddictApiOptions.Invoke(defaultOpenIddictApiOptions);
+                openIddictEntityFrameworkCoreBuilder.Services.Configure(openIddictApiOptions);
             }
 
             openIddictEntityFrameworkCoreBuilder.Services.AddSingleton<Mapper<TApplication, TAuthorization, TScope, TToken, TKey>, Mapper<TApplication, TAuthorization, TScope, TToken, TKey>>();
+            openIddictEntityFrameworkCoreBuilder.Services.AddScoped<ModelValidator, ModelValidator>();
             openIddictEntityFrameworkCoreBuilder.AddApiControllers<TApplication, TAuthorization, TScope, TToken, TKey>(defaultOpenIddictApiOptions);
 
             return openIddictEntityFrameworkCoreBuilder;
         }
 
         private static void AddApiControllers<TApplication, TAuthorization, TScope, TToken, TKey>(this OpenIddictEntityFrameworkCoreBuilder openIddictEntityFrameworkCoreBuilder,
-            OpenIddictApiOptions openIddictApiAptions)
+            OpenIddictApiOptions openIddictApiOptions)
             where TApplication : OpenIddictEntityFrameworkCoreApplication<TKey, TAuthorization, TToken>
             where TAuthorization : OpenIddictEntityFrameworkCoreAuthorization<TKey, TApplication, TToken>
             where TScope : OpenIddictEntityFrameworkCoreScope<TKey>
@@ -57,13 +59,13 @@ namespace SharpGrip.OpenIddict.Api.Extensions
             {
                 options.Filters.Add<ApiAccessFilter<TApplication, TAuthorization, TScope, TToken, TKey>>();
                 options.Conventions.Insert(0, new RoutePrefixConvention(
-                    openIddictApiAptions,
+                    openIddictApiOptions,
                     new Dictionary<string, Type>
                     {
-                        {openIddictApiAptions.ApplicationApiRoute, typeof(ApplicationController<TApplication, TAuthorization, TScope, TToken, TKey>)},
-                        {openIddictApiAptions.AuthorizationApiRoute, typeof(AuthorizationController<TApplication, TAuthorization, TScope, TToken, TKey>)},
-                        {openIddictApiAptions.ScopeApiRoute, typeof(ScopeController<TApplication, TAuthorization, TScope, TToken, TKey>)},
-                        {openIddictApiAptions.TokenApiRoute, typeof(TokenController<TApplication, TAuthorization, TScope, TToken, TKey>)}
+                        {openIddictApiOptions.ApplicationApiRoute, typeof(ApplicationController<TApplication, TAuthorization, TScope, TToken, TKey>)},
+                        {openIddictApiOptions.AuthorizationApiRoute, typeof(AuthorizationController<TApplication, TAuthorization, TScope, TToken, TKey>)},
+                        {openIddictApiOptions.ScopeApiRoute, typeof(ScopeController<TApplication, TAuthorization, TScope, TToken, TKey>)},
+                        {openIddictApiOptions.TokenApiRoute, typeof(TokenController<TApplication, TAuthorization, TScope, TToken, TKey>)}
                     }
                 ));
             });

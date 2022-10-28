@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.EntityFrameworkCore.Models;
 using SharpGrip.OpenIddict.Api.Mapping;
+using SharpGrip.OpenIddict.Api.Utilities;
 
 namespace SharpGrip.OpenIddict.Api.Controllers
 {
@@ -13,10 +14,12 @@ namespace SharpGrip.OpenIddict.Api.Controllers
         where TKey : struct, IEquatable<TKey>
     {
         protected readonly Mapper<TApplication, TAuthorization, TScope, TToken, TKey> Mapper;
+        protected readonly ModelValidator ModelValidator;
 
-        protected BaseController(Mapper<TApplication, TAuthorization, TScope, TToken, TKey> mapper)
+        protected BaseController(Mapper<TApplication, TAuthorization, TScope, TToken, TKey> mapper, ModelValidator modelValidator)
         {
             Mapper = mapper;
+            ModelValidator = modelValidator;
         }
     }
 }
