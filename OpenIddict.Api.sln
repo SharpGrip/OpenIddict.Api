@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenIddict.Api", "OpenIddic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenIddict.Api.Models", "OpenIddict.Api.Models\OpenIddict.Api.Models.csproj", "{02B6D78E-AB1E-4FC3-A081-5EAF76C68882}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenIddict.Api.Validation", "OpenIddict.Api.Validation\OpenIddict.Api.Validation.csproj", "{419A7A22-F737-4791-A16B-1E91ADCBB33E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{02B6D78E-AB1E-4FC3-A081-5EAF76C68882}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02B6D78E-AB1E-4FC3-A081-5EAF76C68882}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02B6D78E-AB1E-4FC3-A081-5EAF76C68882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{419A7A22-F737-4791-A16B-1E91ADCBB33E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{419A7A22-F737-4791-A16B-1E91ADCBB33E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{419A7A22-F737-4791-A16B-1E91ADCBB33E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{419A7A22-F737-4791-A16B-1E91ADCBB33E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+        <RootNamespace>SharpGrip.OpenIddict.Api.Validation</RootNamespace>
+        <Nullable>enable</Nullable>
+        <LangVersion>8.0</LangVersion>
+        <PackageOutputPath>../NuGet</PackageOutputPath>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <AssemblyName>SharpGrip.OpenIddict.Api.Validation</AssemblyName>
+        <PackageId>SharpGrip.OpenIddict.Api.Validation</PackageId>
+        <PackageVersion>1.0.0-alpha1</PackageVersion>
+        <Title>SharpGrip OpenIddict API Validation</Title>
+        <Description>SharpGrip OpenIddict.Api is an extension of the OpenIddict library exposing the OpenIddict entities through a RESTful API.</Description>
+        <Company>SharpGrip</Company>
+        <Authors>SharpGrip</Authors>
+        <Copyright>SharpGrip</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>sharpgrip;openiddict</PackageTags>
+        <PackageProjectUrl>https://sharpgrip.net</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/SharpGrip/OpenIddict.Api</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="10" />
+      <PackageReference Include="OpenIddict.Abstractions" Version="3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\OpenIddict.Api.Models\OpenIddict.Api.Models.csproj" />
+    </ItemGroup>
+
+</Project>
