@@ -1,30 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
         <RootNamespace>SharpGrip.OpenIddict.Api</RootNamespace>
-        <Nullable>enable</Nullable>
-        <LangVersion>8.0</LangVersion>
-        <PackageOutputPath>../NuGet</PackageOutputPath>
-        <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <PropertyGroup>
         <AssemblyName>SharpGrip.OpenIddict.Api</AssemblyName>
         <PackageId>SharpGrip.OpenIddict.Api</PackageId>
-        <PackageVersion>1.0.0-alpha2</PackageVersion>
         <Title>SharpGrip OpenIddict API</Title>
         <Description>SharpGrip OpenIddict API is an extension of the OpenIddict library exposing the OpenIddict entities through a RESTful API.</Description>
-        <Company>SharpGrip</Company>
-        <Authors>SharpGrip</Authors>
-        <Copyright>SharpGrip</Copyright>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageTags>sharpgrip;openiddict</PackageTags>
-        <PackageProjectUrl>https://sharpgrip.net</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/SharpGrip/OpenIddict.Api</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>
@@ -33,8 +18,8 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2" />
-        <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="3.*" />
-        <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="3.*" />
+        <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="4.*" />
+        <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="4.*" />
     </ItemGroup>
 
     <ItemGroup>

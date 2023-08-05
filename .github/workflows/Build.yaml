@@ -1,9 +1,9 @@
 name: OpenIddict.Api [Build]
 
 env:
-  JAVA_VERSION: 11
-  DOTNET_VERSION: 6.0.x
-  DOTNET_INCLUDE_PRERELEASE_VERSIONS: true
+  JAVA_VERSION: 17
+  JAVA_DISTRIBUTION: microsoft
+  DOTNET_VERSION: 7.0.x
   DOTNET_BUILD_CONFIGURATION: Release
   SONAR_PATH: .\.sonar\scanner
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -25,20 +25,24 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Set up Java
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-          include-prerelease: ${{ env.DOTNET_INCLUDE_PRERELEASE_VERSIONS }}
+
+      - name: Install dotnet-coverage
+        shell: powershell
+        run: dotnet tool install --global dotnet-coverage
 
       - name: Install SonarCloud scanner
         shell: powershell
@@ -47,7 +51,7 @@ jobs:
           dotnet tool update dotnet-sonarscanner --tool-path ${{ env.SONAR_PATH }}
 
       - name: Build solution
-        run: dotnet build -c ${{ env.DOTNET_BUILD_CONFIGURATION }} /nowarn:NU1701 /warnaserror
+        run: dotnet build -c ${{ env.DOTNET_BUILD_CONFIGURATION }} /warnaserror
 
       - name: Test solution
         run: dotnet test --no-build -c ${{ env.DOTNET_BUILD_CONFIGURATION }} --verbosity normal
@@ -58,6 +62,7 @@ jobs:
       - name: Analyze solution
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ env.SONAR_PROJECT }}" /o:"${{ env.SONAR_ORGANIZATION }}" /d:sonar.login="${{ env.SONAR_TOKEN }}" /d:sonar.host.url="${{ env.SONAR_HOST }}"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ env.SONAR_PROJECT }}" /o:"${{ env.SONAR_ORGANIZATION }}" /d:sonar.token="${{ env.SONAR_TOKEN }}" /d:sonar.host.url="${{ env.SONAR_HOST }}" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
           dotnet build -c ${{ env.DOTNET_BUILD_CONFIGURATION }}
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ env.SONAR_TOKEN }}"
+          dotnet-coverage collect "dotnet test -c ${{ env.DOTNET_BUILD_CONFIGURATION }}" -f xml -o "coverage.xml"
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ env.SONAR_TOKEN }}"

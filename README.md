@@ -1,7 +1,6 @@
 # SharpGrip OpenIddict API [![NuGet](https://img.shields.io/nuget/v/SharpGrip.OpenIddict.Api)](https://www.nuget.org/packages/SharpGrip.OpenIddict.Api)
 
 ## Builds
-
 [![OpenIddict.Api [Build]](https://github.com/SharpGrip/OpenIddict.Api/actions/workflows/Build.yaml/badge.svg)](https://github.com/SharpGrip/OpenIddict.Api/actions/workflows/Build.yaml)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SharpGrip_OpenIddict.Api&metric=alert_status)](https://sonarcloud.io/summary/overall?id=SharpGrip_OpenIddict.Api) \
