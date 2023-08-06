@@ -44,11 +44,11 @@ serviceCollection.AddOpenIddict().AddCore(options =>
 {
     options.UseEntityFrameworkCore()
         .UseDbContext<ApplicationDbContext>()
-        .AddApi<OpenIdApplication, OpenIdAuthorization, OpenIdScope, OpenIdToken, long>(apiOptions =>
+        .AddApi<OpenIdApplication, OpenIdAuthorization, OpenIdScope, OpenIdToken, long>(apiConfiguration =>
         {
-            apiOptions.ApiRoutePrefix = "open-id-api";
-            apiOptions.ApplicationApiRoute = "application";
-            apiOptions.ApplicationApiAccessScope = "my_application_access_scope";
+            apiConfiguration.ApiRoutePrefix = "open-id-api";
+            apiConfiguration.ApplicationApiRoute = "application";
+            apiConfiguration.ApplicationApiAccessScope = "my_application_access_scope";
         });
 });
 ```
