@@ -24,7 +24,8 @@ namespace SharpGrip.OpenIddict.Api.Controllers
     {
         private readonly OpenIddictApplicationManager<TApplication> openIddictApplicationManager;
 
-        public ApplicationController(Mapper<TApplication, TAuthorization, TScope, TToken, TKey> mapper, ModelValidator modelValidator, OpenIddictApplicationManager<TApplication> openIddictApplicationManager)
+        public ApplicationController(Mapper<TApplication, TAuthorization, TScope, TToken, TKey> mapper, ModelValidator modelValidator,
+            OpenIddictApplicationManager<TApplication> openIddictApplicationManager)
             : base(mapper, modelValidator)
         {
             this.openIddictApplicationManager = openIddictApplicationManager;
@@ -111,8 +112,8 @@ namespace SharpGrip.OpenIddict.Api.Controllers
 
             try
             {
-                application = Mapper.Map(applicationUpdateModel, application);
-                await openIddictApplicationManager.UpdateAsync(application);
+                var openIddictApplicationDescriptor = Mapper.Map(applicationUpdateModel);
+                await openIddictApplicationManager.UpdateAsync(application, openIddictApplicationDescriptor);
                 var applicationViewModel = Mapper.Map(application);
 
                 return Ok(applicationViewModel);

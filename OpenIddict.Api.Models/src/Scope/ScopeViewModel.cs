@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SharpGrip.OpenIddict.Api.Models.Scope
 {
@@ -9,9 +10,6 @@ namespace SharpGrip.OpenIddict.Api.Models.Scope
         public string? Description { get; set; }
         public string? ConcurrencyToken { get; set; }
 
-        public string[] DisplayNames { get; set; } = null!;
-        public string[] Descriptions { get; set; } = null!;
-        public string[] Resources { get; set; } = null!;
-        public string[] Properties { get; set; } = null!;
+        public List<string> Resources { get; set; } = new List<string>();
     }
 }

@@ -17,8 +17,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="11.*" />
-      <PackageReference Include="OpenIddict.Abstractions" Version="4.*" />
+      <PackageReference Include="FluentValidation" Version="10.*" />
+      <PackageReference Include="OpenIddict.Abstractions" Version="3.0" />
     </ItemGroup>
 
     <ItemGroup>

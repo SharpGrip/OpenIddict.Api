@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SharpGrip.OpenIddict.Api.Models.Application
 {
@@ -8,12 +9,16 @@ namespace SharpGrip.OpenIddict.Api.Models.Application
         public string? Type { get; set; }
         public string? ConsentType { get; set; }
         public string? ClientId { get; set; }
-        public string? ClientSecret { get; set; }
 
-        public string[] Permissions { get; set; } = null!;
-        public string[] PostLogoutRedirectUris { get; set; } = null!;
-        public string[] RedirectUris { get; set; } = null!;
-        public string[] Requirements { get; set; } = null!;
-        public string[] Properties { get; set; } = null!;
+        public List<string> PostLogoutRedirectUris { get; set; } = new List<string>();
+        public List<string> RedirectUris { get; set; } = new List<string>();
+
+        public List<string> EndpointPermissions { get; set; } = new List<string>();
+        public List<string> GrantTypePermissions { get; set; } = new List<string>();
+        public List<string> ResponseTypesPermissions { get; set; } = new List<string>();
+        public List<string> ScopePermissions { get; set; } = new List<string>();
+        public List<string> CustomScopePermissions { get; set; } = new List<string>();
+
+        public List<string> FeatureRequirements { get; set; } = new List<string>();
     }
 }

@@ -2,12 +2,12 @@
 
 namespace SharpGrip.OpenIddict.Api.Models.Scope
 {
-    public class ScopeCreateModel : CreateModel, IScopeWriteModel
+    public interface IScopeWriteModel
     {
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
         public string? DisplayName { get; set; }
         public string? Description { get; set; }
 
-        public List<string> Resources { get; set; } = new List<string>();
+        public List<string> Resources { get; set; }
     }
 }

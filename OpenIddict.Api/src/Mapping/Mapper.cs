@@ -6,6 +6,7 @@ using OpenIddict.Abstractions;
 using OpenIddict.EntityFrameworkCore.Models;
 using SharpGrip.OpenIddict.Api.Models.Application;
 using SharpGrip.OpenIddict.Api.Models.Authorization;
+using SharpGrip.OpenIddict.Api.Models.Constants;
 using SharpGrip.OpenIddict.Api.Models.Scope;
 using SharpGrip.OpenIddict.Api.Models.Token;
 
@@ -20,20 +21,59 @@ namespace SharpGrip.OpenIddict.Api.Mapping
     {
         public ApplicationViewModel<TKey> Map(TApplication application)
         {
-            return new ApplicationViewModel<TKey>
+            var applicationViewModel = new ApplicationViewModel<TKey>
             {
                 Id = application.Id,
                 DisplayName = application.DisplayName,
                 Type = application.Type,
                 ConsentType = application.ConsentType,
                 ClientId = application.ClientId,
-                ClientSecret = application.ClientSecret,
-                Permissions = JsonSerializer.Deserialize<string[]>(application.Permissions ?? "[]")!,
-                PostLogoutRedirectUris = JsonSerializer.Deserialize<string[]>(application.PostLogoutRedirectUris ?? "[]")!,
-                RedirectUris = JsonSerializer.Deserialize<string[]>(application.RedirectUris ?? "[]")!,
-                Requirements = JsonSerializer.Deserialize<string[]>(application.Requirements ?? "[]")!,
-                Properties = JsonSerializer.Deserialize<string[]>(application.Properties ?? "[]")!
+                PostLogoutRedirectUris = JsonSerializer.Deserialize<List<string>>(application.PostLogoutRedirectUris ?? "[]")!,
+                RedirectUris = JsonSerializer.Deserialize<List<string>>(application.RedirectUris ?? "[]")!
             };
+
+            foreach (var permission in JsonSerializer.Deserialize<string[]>(application.Permissions ?? "[]"))
+            {
+                if (OpenIddictApiConstants.Application.Permissions.Endpoints.Keys.Contains(permission))
+                {
+                    applicationViewModel.EndpointPermissions.Add(permission);
+
+                    continue;
+                }
+
+                if (OpenIddictApiConstants.Application.Permissions.GrantTypes.Keys.Contains(permission))
+                {
+                    applicationViewModel.GrantTypePermissions.Add(permission);
+
+                    continue;
+                }
+
+                if (OpenIddictApiConstants.Application.Permissions.ResponseTypes.Keys.Contains(permission))
+                {
+                    applicationViewModel.ResponseTypesPermissions.Add(permission);
+
+                    continue;
+                }
+
+                if (OpenIddictApiConstants.Application.Permissions.Scopes.Keys.Contains(permission))
+                {
+                    applicationViewModel.ScopePermissions.Add(permission);
+
+                    continue;
+                }
+
+                applicationViewModel.CustomScopePermissions.Add(permission);
+            }
+
+            foreach (var requirement in JsonSerializer.Deserialize<string[]>(application.Requirements ?? "[]"))
+            {
+                if (requirement.StartsWith(OpenIddictConstants.Requirements.Prefixes.Feature))
+                {
+                    applicationViewModel.FeatureRequirements.Add(requirement);
+                }
+            }
+
+            return applicationViewModel;
         }
 
         public IEnumerable<ApplicationViewModel<TKey>> Map(IEnumerable<TApplication> applications)
@@ -41,49 +81,38 @@ namespace SharpGrip.OpenIddict.Api.Mapping
             return applications.Select(Map);
         }
 
-        public OpenIddictApplicationDescriptor Map(ApplicationCreateModel applicationCreateModel)
+        public OpenIddictApplicationDescriptor Map(IApplicationWriteModel applicationWriteModel)
         {
             var openIddictApplicationDescriptor = new OpenIddictApplicationDescriptor
             {
-                DisplayName = applicationCreateModel.DisplayName,
-                Type = applicationCreateModel.Type,
-                ConsentType = applicationCreateModel.ConsentType,
-                ClientId = applicationCreateModel.ClientId,
-                ClientSecret = applicationCreateModel.ClientSecret
+                DisplayName = applicationWriteModel.DisplayName,
+                Type = applicationWriteModel.Type,
+                ConsentType = applicationWriteModel.ConsentType,
+                ClientId = applicationWriteModel.ClientId,
+                ClientSecret = applicationWriteModel.ClientSecret
             };
 
-            foreach (var permission in applicationCreateModel.Permissions)
-            {
-                openIddictApplicationDescriptor.Permissions.Add(permission);
-            }
-
-            foreach (var postLogoutRedirectUri in applicationCreateModel.PostLogoutRedirectUris)
+            foreach (var postLogoutRedirectUri in applicationWriteModel.PostLogoutRedirectUris)
             {
                 openIddictApplicationDescriptor.PostLogoutRedirectUris.Add(new Uri(postLogoutRedirectUri));
             }
 
-            foreach (var redirectUri in applicationCreateModel.RedirectUris)
+            foreach (var redirectUri in applicationWriteModel.RedirectUris)
             {
                 openIddictApplicationDescriptor.RedirectUris.Add(new Uri(redirectUri));
             }
 
-            foreach (var requirement in applicationCreateModel.Requirements)
+            foreach (var permission in applicationWriteModel.GetPermissions())
+            {
+                openIddictApplicationDescriptor.Permissions.Add(permission);
+            }
+
+            foreach (var requirement in applicationWriteModel.FeatureRequirements)
             {
                 openIddictApplicationDescriptor.Requirements.Add(requirement);
             }
 
             return openIddictApplicationDescriptor;
-        }
-
-        public TApplication Map(ApplicationUpdateModel applicationUpdateModel, TApplication application)
-        {
-            application.DisplayName = applicationUpdateModel.DisplayName;
-            application.Type = applicationUpdateModel.Type;
-            application.ConsentType = applicationUpdateModel.ConsentType;
-            application.ClientId = applicationUpdateModel.ClientId;
-            application.ClientSecret = applicationUpdateModel.ClientSecret;
-
-            return application;
         }
 
         public AuthorizationViewModel<TKey> Map(TAuthorization authorization)
@@ -98,7 +127,7 @@ namespace SharpGrip.OpenIddict.Api.Mapping
                 CreationDate = authorization.CreationDate,
                 Scopes = JsonSerializer.Deserialize<string[]>(authorization.Scopes ?? "[]")!,
                 Properties = JsonSerializer.Deserialize<string[]>(authorization.Properties ?? "[]")!,
-                ApplicationId = authorization.Application != null ? authorization.Application.Id : default
+                ApplicationId = authorization.Application?.Id ?? default
             };
         }
 
@@ -116,10 +145,7 @@ namespace SharpGrip.OpenIddict.Api.Mapping
                 DisplayName = scope.DisplayName,
                 Description = scope.Description,
                 ConcurrencyToken = scope.ConcurrencyToken,
-                DisplayNames = JsonSerializer.Deserialize<string[]>(scope.DisplayNames ?? "[]")!,
-                Descriptions = JsonSerializer.Deserialize<string[]>(scope.Descriptions ?? "[]")!,
-                Resources = JsonSerializer.Deserialize<string[]>(scope.Resources ?? "[]")!,
-                Properties = JsonSerializer.Deserialize<string[]>(scope.Properties ?? "[]")!
+                Resources = JsonSerializer.Deserialize<List<string>>(scope.Resources ?? "[]")!
             };
         }
 
@@ -128,30 +154,21 @@ namespace SharpGrip.OpenIddict.Api.Mapping
             return scopes.Select(Map).ToList();
         }
 
-        public OpenIddictScopeDescriptor Map(ScopeCreateModel scopeCreateModel)
+        public OpenIddictScopeDescriptor Map(IScopeWriteModel scopeWriteModel)
         {
             var openIddictScopeDescriptor = new OpenIddictScopeDescriptor
             {
-                Name = scopeCreateModel.Name,
-                DisplayName = scopeCreateModel.DisplayName,
-                Description = scopeCreateModel.Description
+                Name = scopeWriteModel.Name,
+                DisplayName = scopeWriteModel.DisplayName,
+                Description = scopeWriteModel.Description
             };
 
-            foreach (var resource in scopeCreateModel.Resources)
+            foreach (var resource in scopeWriteModel.Resources)
             {
                 openIddictScopeDescriptor.Resources.Add(resource);
             }
 
             return openIddictScopeDescriptor;
-        }
-
-        public TScope Map(ScopeUpdateModel scopeUpdateModel, TScope scope)
-        {
-            scope.Name = scopeUpdateModel.Name;
-            scope.DisplayName = scopeUpdateModel.DisplayName;
-            scope.Description = scopeUpdateModel.Description;
-
-            return scope;
         }
 
         public TokenViewModel<TKey> Map(TToken token)
@@ -169,8 +186,8 @@ namespace SharpGrip.OpenIddict.Api.Mapping
                 ExpirationDate = token.ExpirationDate,
                 RedemptionDate = token.RedemptionDate,
                 Properties = JsonSerializer.Deserialize<string[]>(token.Properties ?? "[]")!,
-                ApplicationId = token.Application != null ? token.Application.Id : default,
-                AuthorizationId = token.Authorization != null ? token.Authorization.Id : default,
+                ApplicationId = token.Application?.Id ?? default,
+                AuthorizationId = token.Authorization?.Id ?? default,
             };
         }
 

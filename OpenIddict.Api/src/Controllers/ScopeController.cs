@@ -111,8 +111,8 @@ namespace SharpGrip.OpenIddict.Api.Controllers
 
             try
             {
-                scope = Mapper.Map(scopeUpdateModel, scope);
-                await openIddictScopeManager.UpdateAsync(scope);
+                var openIddictScopeDescriptor = Mapper.Map(scopeUpdateModel);
+                await openIddictScopeManager.UpdateAsync(scope, openIddictScopeDescriptor);
                 var scopeViewModel = Mapper.Map(scope);
 
                 return Ok(scopeViewModel);

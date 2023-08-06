@@ -10,18 +10,10 @@ namespace SharpGrip.OpenIddict.Api.Utilities
 {
     public class ModelValidator
     {
-        private readonly IValidator<ApplicationCreateModel> applicationCreateModelValidator;
-        private readonly IValidator<ApplicationUpdateModel> applicationUpdateModelValidator;
-        private readonly IValidator<ScopeCreateModel> scopeCreateModelValidator;
-        private readonly IValidator<ScopeUpdateModel> scopeUpdateModelValidator;
-
-        public ModelValidator()
-        {
-            applicationCreateModelValidator = new ApplicationCreateModelValidator();
-            applicationUpdateModelValidator = new ApplicationUpdateModelValidator();
-            scopeCreateModelValidator = new ScopeCreateModelValidator();
-            scopeUpdateModelValidator = new ScopeUpdateModelValidator();
-        }
+        private readonly IValidator<ApplicationCreateModel> applicationCreateModelValidator = new ApplicationCreateModelValidator();
+        private readonly IValidator<ApplicationUpdateModel> applicationUpdateModelValidator = new ApplicationUpdateModelValidator();
+        private readonly IValidator<ScopeCreateModel> scopeCreateModelValidator = new ScopeCreateModelValidator();
+        private readonly IValidator<ScopeUpdateModel> scopeUpdateModelValidator = new ScopeUpdateModelValidator();
 
         public async Task<ValidationResult> Validate(ApplicationCreateModel applicationCreateModel)
         {
