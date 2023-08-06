@@ -1,6 +1,7 @@
 # SharpGrip OpenIddict API [![NuGet](https://img.shields.io/nuget/v/SharpGrip.OpenIddict.Api)](https://www.nuget.org/packages/SharpGrip.OpenIddict.Api)
 
 ## Builds
+
 [![OpenIddict.Api [Build]](https://github.com/SharpGrip/OpenIddict.Api/actions/workflows/Build.yaml/badge.svg)](https://github.com/SharpGrip/OpenIddict.Api/actions/workflows/Build.yaml)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SharpGrip_OpenIddict.Api&metric=alert_status)](https://sonarcloud.io/summary/overall?id=SharpGrip_OpenIddict.Api) \
@@ -31,9 +32,11 @@ serviceCollection.AddOpenIddict().AddCore(options =>
 
 ### Configuration
 
-In case you are overriding the OpenIddict entities you need to use the `AddApi<TApplication, TAuthorization, TScope, TToken, TKey>` overload to make sure the API is working with the correct entity types.
+In case you are overriding the OpenIddict entities you need to use the `AddApi<TApplication, TAuthorization, TScope, TToken, TKey>` overload to make sure the API is working with the correct entity
+types.
 
-Both `AddApi` extension methods expose an options builder with which you can configure your API. In the example below the `Application` API route will become `/open-id-api/application` and the endpoints exposed in that route will require an
+Both `AddApi` extension methods expose an options builder with which you can configure your API. In the example below the `Application` API route will become `/open-id-api/application` and the
+endpoints exposed in that route will require an
 access token with the `my_application_access_scope` scope.
 
 ```csharp
@@ -70,35 +73,35 @@ Please find below an overview of the supported operations using the default rout
 
 ### Application
 
-| Method   | Endpoint                       | Description                   |
-|----------|--------------------------------|-------------------------------|
-| `GET`    | `api/open-id/application`      | Returns all applications.     |
-| `GET`    | `api/open-id/application/{id}` | Returns an application by ID. |
-| `POST`   | `api/open-id/application`      | Creates an application.       |
-| `PUT`    | `api/open-id/application/{id}` | Updates an application by ID. |
-| `DELETE` | `api/open-id/application/{id}` | Deletes an application by ID. |
+| Method   | Endpoint                       | Description                   | Parameters                                                                                                        |
+|----------|--------------------------------|-------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| `GET`    | `api/open-id/application`      | Returns all applications.     |                                                                                                                   |
+| `GET`    | `api/open-id/application/{id}` | Returns an application by ID. | `string` id                                                                                                       |
+| `POST`   | `api/open-id/application`      | Creates an application.       | [ApplicationCreateModel](../master/OpenIddict.Api.Models/src/Application/ApplicationCreateModel.cs)               |
+| `PUT`    | `api/open-id/application/{id}` | Updates an application by ID. | `string` id & [ApplicationUpdateModel](../master/OpenIddict.Api.Models/src/Application/ApplicationUpdateModel.cs) |
+| `DELETE` | `api/open-id/application/{id}` | Deletes an application by ID. | `string` id                                                                                                       |
 
 ### Authorization
 
-| Method | Endpoint                       | Description                     |
-|--------|--------------------------------|---------------------------------|
-| `GET`  | `api/open-id/authorization`    | Returns all authorizations.     |
-| `GET`  | `api/open-id/application/{id}` | Returns an authorization by ID. |
+| Method | Endpoint                       | Description                     | Parameters  |
+|--------|--------------------------------|---------------------------------|-------------|
+| `GET`  | `api/open-id/authorization`    | Returns all authorizations.     |             |
+| `GET`  | `api/open-id/application/{id}` | Returns an authorization by ID. | `string` id |
 
 ### Scope
 
-| Method   | Endpoint                 | Description            |
-|----------|--------------------------|------------------------|
-| `GET`    | `api/open-id/scope`      | Returns all scopes.    |
-| `GET`    | `api/open-id/scope/{id}` | Returns a scope by ID. |
-| `POST`   | `api/open-id/scope`      | Creates a scope.       |
-| `PUT`    | `api/open-id/scope/{id}` | Updates a scope by ID. |
-| `DELETE` | `api/open-id/scope/{id}` | Deletes a scope by ID. |
+| Method   | Endpoint                 | Description            | Parameters                                                                                      |
+|----------|--------------------------|------------------------|-------------------------------------------------------------------------------------------------|
+| `GET`    | `api/open-id/scope`      | Returns all scopes.    |                                                                                                 |
+| `GET`    | `api/open-id/scope/{id}` | Returns a scope by ID. | `string` id                                                                                     |
+| `POST`   | `api/open-id/scope`      | Creates a scope.       | [ScopeCreateModel](../master/OpenIddict.Api.Models/src/Scope/ScopeCreateModel.cs)               |
+| `PUT`    | `api/open-id/scope/{id}` | Updates a scope by ID. | `string` id & [ScopeUpdateModel](../master/OpenIddict.Api.Models/src/Scope/ScopeUpdateModel.cs) |
+| `DELETE` | `api/open-id/scope/{id}` | Deletes a scope by ID. | `string` id                                                                                     |
 
 ### Token
 
-| Method | Endpoint                 | Description            |
-|--------|--------------------------|------------------------|
-| `GET`  | `api/open-id/token`      | Returns all tokens.    |
-| `GET`  | `api/open-id/token/{id}` | Returns a token by ID. |
+| Method | Endpoint                 | Description            | Parameters  |
+|--------|--------------------------|------------------------|-------------|
+| `GET`  | `api/open-id/token`      | Returns all tokens.    |             |
+| `GET`  | `api/open-id/token/{id}` | Returns a token by ID. | `string` id |
 
