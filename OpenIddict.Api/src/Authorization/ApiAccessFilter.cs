@@ -17,9 +17,9 @@ namespace SharpGrip.OpenIddict.Api.Authorization
         where TToken : OpenIddictEntityFrameworkCoreToken<TKey, TApplication, TAuthorization>
         where TKey : struct, IEquatable<TKey>
     {
-        private readonly OpenIddictApiOptions openIddictApiOptions;
+        private readonly OpenIddictApiConfiguration openIddictApiOptions;
 
-        public ApiAccessFilter(IOptions<OpenIddictApiOptions> openIddictApiOptions)
+        public ApiAccessFilter(IOptions<OpenIddictApiConfiguration> openIddictApiOptions)
         {
             this.openIddictApiOptions = openIddictApiOptions.Value;
         }

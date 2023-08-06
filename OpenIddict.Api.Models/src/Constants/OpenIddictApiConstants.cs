@@ -5,6 +5,23 @@ namespace SharpGrip.OpenIddict.Api.Models.Constants
 {
     public static class OpenIddictApiConstants
     {
+        public static class Api
+        {
+            public const string ApiRoutePrefix = "api/open-id";
+
+            public const string ApplicationApiRoute = "application";
+            public const string ApplicationApiAccessScope = "open_id_application_api_access";
+
+            public const string AuthorizationApiRoute = "authorization";
+            public const string AuthorizationApiAccessScope = "open_id_authorization_api_access";
+
+            public const string ScopeApiRoute = "scope";
+            public const string ScopeApiAccessScope = "open_id_scope_api_access";
+
+            public const string TokenApiRoute = "token";
+            public const string TokenApiAccessScope = "open_id_token_api_access";
+        }
+
         public static class Application
         {
             public static IDictionary<string, string> ClientTypes => new Dictionary<string, string>

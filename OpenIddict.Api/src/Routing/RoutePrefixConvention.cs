@@ -12,7 +12,7 @@ namespace SharpGrip.OpenIddict.Api.Routing
         private readonly AttributeRouteModel attributeRoutePrefixModel;
         private readonly IDictionary<string, Type> controllerTypeData;
 
-        public RoutePrefixConvention(OpenIddictApiOptions openIddictApiOptions, IDictionary<string, Type> controllerTypeData)
+        public RoutePrefixConvention(OpenIddictApiConfiguration openIddictApiOptions, IDictionary<string, Type> controllerTypeData)
         {
             this.controllerTypeData = controllerTypeData;
             attributeRoutePrefixModel = new AttributeRouteModel(new RouteAttribute(openIddictApiOptions.ApiRoutePrefix));
