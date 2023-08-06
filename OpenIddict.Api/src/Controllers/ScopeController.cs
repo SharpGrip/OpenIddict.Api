@@ -123,7 +123,7 @@ namespace SharpGrip.OpenIddict.Api.Controllers
             }
         }
 
-        [HttpPost("{id}")]
+        [HttpDelete("{id}")]
         [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> Delete(TKey id)
